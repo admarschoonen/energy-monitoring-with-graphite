@@ -1,0 +1,34 @@
+{
+	"metrics": [
+		"cpu_usage", 
+		"cpu_usage", 
+		"cpu_usage", 
+       		"ram_available", 
+       		"ram_available", 
+       		"ram_available", 
+       		"disk_free",
+       		"disk_free",
+       		"disk_free",
+		"load",
+		"load",
+		"load"
+	], 
+	"paths": [
+		"system.cpu.usage.avg", 
+		"system.cpu.usage.min", 
+		"system.cpu.usage.max", 
+		"system.ram.free.avg", 
+		"system.ram.free.min", 
+		"system.ram.free.max", 
+		"system.disk.free.avg", 
+		"system.disk.free.min", 
+		"system.disk.free.max", 
+		"system.load.avg",
+		"system.load.min",
+		"system.load.max"
+	], 
+	"interval": 10,
+	"server": "localhost",
+	"port": 2003
+}
+

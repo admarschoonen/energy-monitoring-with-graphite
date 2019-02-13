@@ -1,0 +1,14 @@
+{
+	"client_id": "",
+	"client_secret": "",
+	"metrics": ["Thuis.thermostat.Family Room.Temp",
+		"Thuis.thermostat.Family Room.Target",
+		"Thuis.thermostat.Family Room.Humidity"],
+	"paths": ["temperature.living_room.measurement",
+		"temperature.living_room.target",
+		"humidity.living_room.measurement"],
+	"interval": 10,
+	"server": "localhost",
+	"port": 2003
+}
+

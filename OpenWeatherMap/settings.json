@@ -1,0 +1,11 @@
+{
+	"API_key": "",
+	"location": "Eindhoven,NL",
+	"metrics": [ "humidity", "temperature", "day_length" ],
+	"paths": [ "humidity.outside.measurement",
+		"temperature.outside.measurement", "day_length" ],
+	"interval": 10,
+	"server": "localhost",
+	"port": 2003
+}
+
