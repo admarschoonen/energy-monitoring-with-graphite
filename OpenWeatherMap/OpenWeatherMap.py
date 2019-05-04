@@ -22,6 +22,7 @@ while True:
         observation = owm.weather_at_place(location)
         weather = observation.get_weather()
     except:
+        time.sleep(interval)
         continue
 
     t = ''
