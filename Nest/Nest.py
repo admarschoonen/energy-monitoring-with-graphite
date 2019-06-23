@@ -1,10 +1,11 @@
+#!/usr/bin/python3
 import json
 import time
 import nest
 import sys
 import socket
 
-with open('settings.json') as json_data:
+with open('/etc/energy-monitoring-with-graphite/Nest/settings.json') as json_data:
     d = json.load(json_data)
     client_id = d['client_id']
     client_secret = d['client_secret']
@@ -14,7 +15,7 @@ with open('settings.json') as json_data:
     server = d['server']
     port = d['port']
 
-access_token_cache_file = 'nest.json'
+access_token_cache_file = '/etc/energy-monitoring-with-graphite/Nest/nest.json'
 product_version = 0
 
 napi = nest.Nest(client_id=client_id, client_secret=client_secret, 
@@ -93,46 +94,10 @@ while True:
         try:
             s = socket.socket()
             s.connect((server, port))
-            s.send(t)
+            s.send(t.encode('ascii'))
             s.close()
         except:
             print(time.ctime(t_start) + ' Nest: Error: Could not send message.')
-
-    t_now = time.time()
-    if (t_now - t_start) < interval:
-        time.sleep(interval - (t_now - t_start))
-
-
-
-sys.exit(0)
-
-while True:
-    t_start = time.time()
-    try:
-        observation = owm.weather_at_place(location)
-        weather = observation.get_weather()
-    except:
-        continue
-
-    n = 0
-    for m in metrics:
-        p = ''
-        if m == 'humidity':
-            p = paths[n]
-            v = str(weather.get_humidity())
-        if m == 'temperature':
-            p = paths[n]
-            v = str(weather.get_temperature('celsius')['temp'])
-
-        if p != '':
-            t = p + ' ' + v + ' ' + str(int(t_start)) + '\n'
-            s = socket.socket()
-            s.connect((server, port))
-            s.send(t)
-            s.close()
-
-        n = n + 1
-
 
     t_now = time.time()
     if (t_now - t_start) < interval:

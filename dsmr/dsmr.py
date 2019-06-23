@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import json
 import time
 from dsmr_parser import telegram_specifications
@@ -41,7 +42,7 @@ def retrieve_current_value_from_metric_names(delta_name, metric_name):
         value = 0
     return value
 
-with open('settings.json') as json_data:
+with open('/etc/energy-monitoring-with-graphite/dsmr/settings.json') as json_data:
     d = json.load(json_data)
     device = d['device']
     dsmr_version = d['dsmr_version']
@@ -67,23 +68,23 @@ else:
 t_now = time.time()
 print(time.ctime(t_now) + ' Retrieving current values')
 electricity_used_tariff_1_old = retrieve_current_value_from_metric_names(
-        'electricity_delta_used_tariff_1', 'electricity_used_tariff_1')
+    'electricity_delta_used_tariff_1', 'electricity_used_tariff_1')
 electricity_used_tariff_2_old = retrieve_current_value_from_metric_names(
-        'electricity_delta_used_tariff_2', 'electricity_used_tariff_2')
+    'electricity_delta_used_tariff_2', 'electricity_used_tariff_2')
 electricity_used_tariff_1_2_old = retrieve_current_value_from_metric_names(
-        'electricity_delta_used_tariff_1_2', 'electricity_used_tariff_1_2')
+    'electricity_delta_used_tariff_1_2', 'electricity_used_tariff_1_2')
 
 electricity_delivered_tariff_1_old = retrieve_current_value_from_metric_names(
-        'electricity_delta_delivered_tariff_1', 'electricity_delivered_tariff_1')
+    'electricity_delta_delivered_tariff_1', 'electricity_delivered_tariff_1')
 electricity_delivered_tariff_2_old = retrieve_current_value_from_metric_names(
-        'electricity_delta_delivered_tariff_2', 'electricity_delivered_tariff_2')
+    'electricity_delta_delivered_tariff_2', 'electricity_delivered_tariff_2')
 electricity_delivered_tariff_1_2_old = retrieve_current_value_from_metric_names(
-        'electricity_delta_delivered_tariff_1_2', 'electricity_delivered_tariff_1_2')
+    'electricity_delta_delivered_tariff_1_2', 'electricity_delivered_tariff_1_2')
 
 hourly_gas_meter_reading_old = retrieve_current_value_from_metric_names(
-        'delta_hourly_gas_meter_reading', 'hourly_gas_meter_reading')
+    'delta_hourly_gas_meter_reading', 'hourly_gas_meter_reading')
 gas_meter_reading_old = retrieve_current_value_from_metric_names(
-        'delta_ggas_meter_reading', 'hourly_gas_meter_reading')
+    'delta_ggas_meter_reading', 'hourly_gas_meter_reading')
 
 print('current values: ')
 print('electricity_used_tariff_1:   ' + str(electricity_used_tariff_1_old))
@@ -96,8 +97,8 @@ print('hourly_gas_meter_reading: ' + str(hourly_gas_meter_reading_old))
 print('gas_meter_reading: ' + str(gas_meter_reading_old))
 
 serial_reader = SerialReader(device = device, 
-        serial_settings = serial_settings, 
-        telegram_specification = telegram_specification)
+    serial_settings = serial_settings, 
+    telegram_specification = telegram_specification)
 
 got_socket = False
 while True:
@@ -326,7 +327,7 @@ while True:
                         p = paths[n]
                     except:
                         continue
-        
+            
                 if m == "electricity_used_tariff_1_2":
                     try:
                         v = str(float(telegram[obis_references.ELECTRICITY_USED_TARIFF_1].value) +
@@ -341,7 +342,7 @@ while True:
                         p = paths[n]
                     except:
                         continue
-        
+            
                 if m == "electricity_delta_used_tariff_1":
                     try:
                         v2 = float(telegram[obis_references.ELECTRICITY_USED_TARIFF_1].value)
@@ -405,7 +406,7 @@ while True:
                     
                 if p != '':
                     t = t + p + ' ' + v + ' ' + str(int(t_start)) + '\n'
-        
+            
             store_values = False
             if t != '':
                 if got_socket == False:
@@ -416,7 +417,7 @@ while True:
                     except:
                         s.close()
                         got_socket = False
-        
+            
                 if got_socket:
                     try:
                         s.send(t.encode('ascii'))
@@ -431,42 +432,42 @@ while True:
             if store_values:
                 try:
                     electricity_used_tariff_1_old = \
-                            float(telegram[obis_references.ELECTRICITY_USED_TARIFF_1].value)
+                        float(telegram[obis_references.ELECTRICITY_USED_TARIFF_1].value)
                 except:
                     electricity_used_tariff_1_old = 0
                 try:
                     electricity_used_tariff_2_old = \
-                            float(telegram[obis_references.ELECTRICITY_USED_TARIFF_2].value)
+                        float(telegram[obis_references.ELECTRICITY_USED_TARIFF_2].value)
                 except:
                     electricity_used_tariff_2_old = 0
                 try:
                     electricity_used_tariff_1_2_old = electricity_used_tariff_1_old + \
-                            electricity_used_tariff_2_old 
+                        electricity_used_tariff_2_old 
                 except:
                     electricity_used_tariff_1_2_old = 0
                 try:
                     electricity_delivered_tariff_1_old = \
-                            float(telegram[obis_references.ELECTRICITY_DELIVERED_TARIFF_1].value)
+                        float(telegram[obis_references.ELECTRICITY_DELIVERED_TARIFF_1].value)
                 except:
                     electricity_delivered_tariff_1_old = 0
                 try:
                     electricity_delivered_tariff_2_old = \
-                            float(telegram[obis_references.ELECTRICITY_DELIVERED_TARIFF_2].value)
+                        float(telegram[obis_references.ELECTRICITY_DELIVERED_TARIFF_2].value)
                 except:
                     electricity_delivered_tariff_2_old = 0
                 try:
                     electricity_delivered_tariff_1_2_old = electricity_delivered_tariff_1_old + \
-                            electricity_delivered_tariff_2_old 
+                        electricity_delivered_tariff_2_old 
                 except:
                     electricity_delivered_tariff_1_2_old = 0
                 try:
                     hourly_gas_meter_reading_old = \
-                            float(telegram[obis_references.HOURLY_GAS_METER_READING].value)
+                        float(telegram[obis_references.HOURLY_GAS_METER_READING].value)
                 except:
                     hourly_gas_meter_reading_old = 0
                 try:
                     gas_meter_reading_old = \
-                            float(telegram[obis_references.GAS_METER_READING].value)
+                        float(telegram[obis_references.GAS_METER_READING].value)
                 except:
                     gas_meter_reading_old = 0
         

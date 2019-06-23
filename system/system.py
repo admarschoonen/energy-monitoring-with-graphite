@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import json
 import time
 import os
@@ -53,9 +54,7 @@ def disk_usage(path):
     # http://goo.gl/sWGbH
     return usage_ntuple(total, used, free, round(percent, 1))
 
-
-
-with open('settings.json') as json_data:
+with open('/etc/energy-monitoring-with-graphite/system/settings.json') as json_data:
     d = json.load(json_data)
     metrics = d['metrics']
     paths = d['paths']

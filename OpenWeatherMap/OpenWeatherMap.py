@@ -1,10 +1,11 @@
+#!/usr/bin/python3
 import json
 import time
 import pyowm
 import sys
 import socket
 
-with open('settings.json') as json_data:
+with open('/etc/energy-monitoring-with-graphite/OpenWeatherMap/settings.json') as json_data:
     d = json.load(json_data)
     api_key = d['API_key']
     location = d['location']
@@ -51,7 +52,7 @@ while True:
         try:
             s = socket.socket()
             s.connect((server, port))
-            s.send(t)
+            s.send(t.encode('ascii'))
             s.close()
         except:
             print(time.ctime(t_start) + ' OpenWeatherMap: Error: Could not send message.')
@@ -59,4 +60,6 @@ while True:
     t_now = time.time()
     if (t_now - t_start) < interval:
         time.sleep(interval - (t_now - t_start))
+
+sys.exit(0)
 
