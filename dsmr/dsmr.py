@@ -66,35 +66,45 @@ else:
     sys.exit(1)
 
 t_now = time.time()
-print(time.ctime(t_now) + ' Retrieving current values')
-electricity_used_tariff_1_old = retrieve_current_value_from_metric_names(
-    'electricity_delta_used_tariff_1', 'electricity_used_tariff_1')
-electricity_used_tariff_2_old = retrieve_current_value_from_metric_names(
-    'electricity_delta_used_tariff_2', 'electricity_used_tariff_2')
-electricity_used_tariff_1_2_old = retrieve_current_value_from_metric_names(
-    'electricity_delta_used_tariff_1_2', 'electricity_used_tariff_1_2')
 
-electricity_delivered_tariff_1_old = retrieve_current_value_from_metric_names(
-    'electricity_delta_delivered_tariff_1', 'electricity_delivered_tariff_1')
-electricity_delivered_tariff_2_old = retrieve_current_value_from_metric_names(
-    'electricity_delta_delivered_tariff_2', 'electricity_delivered_tariff_2')
-electricity_delivered_tariff_1_2_old = retrieve_current_value_from_metric_names(
-    'electricity_delta_delivered_tariff_1_2', 'electricity_delivered_tariff_1_2')
+electricity_used_tariff_1_old = 0
+electricity_used_tariff_2_old = 0
+electricity_used_tariff_1_2_old = 0
+electricity_delivered_tariff_1_old = 0
+electricity_delivered_tariff_2_old = 0
+electricity_delivered_tariff_1_2_old = 0
+hourly_gas_meter_reading_old = 0
+gas_meter_reading_old = 0
 
-hourly_gas_meter_reading_old = retrieve_current_value_from_metric_names(
-    'delta_hourly_gas_meter_reading', 'hourly_gas_meter_reading')
-gas_meter_reading_old = retrieve_current_value_from_metric_names(
-    'delta_ggas_meter_reading', 'hourly_gas_meter_reading')
-
-print('current values: ')
-print('electricity_used_tariff_1:   ' + str(electricity_used_tariff_1_old))
-print('electricity_used_tariff_2:   ' + str(electricity_used_tariff_2_old))
-print('electricity_used_tariff_1_2: ' + str(electricity_used_tariff_1_2_old))
-print('electricity_delivered_tariff_1:   ' + str(electricity_delivered_tariff_1_old))
-print('electricity_delivered_tariff_2:   ' + str(electricity_delivered_tariff_2_old))
-print('electricity_delivered_tariff_1_2: ' + str(electricity_delivered_tariff_1_2_old))
-print('hourly_gas_meter_reading: ' + str(hourly_gas_meter_reading_old))
-print('gas_meter_reading: ' + str(gas_meter_reading_old))
+# print(time.ctime(t_now) + ' Retrieving current values')
+# electricity_used_tariff_1_old = retrieve_current_value_from_metric_names(
+#     'electricity_delta_used_tariff_1', 'electricity_used_tariff_1')
+# electricity_used_tariff_2_old = retrieve_current_value_from_metric_names(
+#     'electricity_delta_used_tariff_2', 'electricity_used_tariff_2')
+# electricity_used_tariff_1_2_old = retrieve_current_value_from_metric_names(
+#     'electricity_delta_used_tariff_1_2', 'electricity_used_tariff_1_2')
+# 
+# electricity_delivered_tariff_1_old = retrieve_current_value_from_metric_names(
+#     'electricity_delta_delivered_tariff_1', 'electricity_delivered_tariff_1')
+# electricity_delivered_tariff_2_old = retrieve_current_value_from_metric_names(
+#     'electricity_delta_delivered_tariff_2', 'electricity_delivered_tariff_2')
+# electricity_delivered_tariff_1_2_old = retrieve_current_value_from_metric_names(
+#     'electricity_delta_delivered_tariff_1_2', 'electricity_delivered_tariff_1_2')
+# 
+# hourly_gas_meter_reading_old = retrieve_current_value_from_metric_names(
+#     'delta_hourly_gas_meter_reading', 'hourly_gas_meter_reading')
+# gas_meter_reading_old = retrieve_current_value_from_metric_names(
+#     'delta_ggas_meter_reading', 'hourly_gas_meter_reading')
+# 
+# print('current values: ')
+# print('electricity_used_tariff_1:   ' + str(electricity_used_tariff_1_old))
+# print('electricity_used_tariff_2:   ' + str(electricity_used_tariff_2_old))
+# print('electricity_used_tariff_1_2: ' + str(electricity_used_tariff_1_2_old))
+# print('electricity_delivered_tariff_1:   ' + str(electricity_delivered_tariff_1_old))
+# print('electricity_delivered_tariff_2:   ' + str(electricity_delivered_tariff_2_old))
+# print('electricity_delivered_tariff_1_2: ' + str(electricity_delivered_tariff_1_2_old))
+# print('hourly_gas_meter_reading: ' + str(hourly_gas_meter_reading_old))
+# print('gas_meter_reading: ' + str(gas_meter_reading_old))
 
 serial_reader = SerialReader(device = device, 
     serial_settings = serial_settings, 
@@ -422,6 +432,7 @@ while True:
                     try:
                         s.send(t.encode('ascii'))
                         store_values = True
+                        print(time.ctime(t_start) + ' dsmr: sent ' + t.encode('ascii'))
                     except:
                         print(time.ctime(t_start) + ' dsmr: Error: Could not send message (send failed).')
                         s.close()
