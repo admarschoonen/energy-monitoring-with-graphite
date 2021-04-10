@@ -33,17 +33,21 @@ while True:
             a_ = a.replace(".", "_").replace(" ", "_").replace("address=","").replace("+", "_").replace("%2C", "").replace("%5C", "")
             p = paths[n] + "." + a_
 
-            data = j[m]
             value = ""
-            for d in data:
-                if timestamp < d["time"]:
-                    value = d["value"]
-                    t_value = d["time"]
-                    break
+            t_value = 0
+            try:
+                data = j[m]
+                for d in data:
+                    if timestamp < d["time"]:
+                        value = d["value"]
+                        t_value = d["time"]
+                        break
+            except:
+                pass
 
             v = str(value)
 
-            if p != '':
+            if p != '' and t_value != 0:
                 t = t + p + ' ' + v + ' ' + str(int(t_value)) + '\n'
 
             n = n + 1
