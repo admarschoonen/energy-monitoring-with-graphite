@@ -12,7 +12,7 @@
 
 # Change the next 3 lines to suit where you install your script and what you want to call it
 DIR=/home/data/energy-monitoring-with-graphite
-DAEMONS=("dsmr" "Nest" "OpenWeatherMap" "system" "otgw")
+DAEMONS=("dsmr" "Nest" "OpenWeatherMap" "system" "otgw" "clairvoyance")
 
 n=0
 for x in "${DAEMONS[@]}"

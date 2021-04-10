@@ -1,0 +1,19 @@
+{
+	"remoteServer": "luon.net",
+	"remotePort": 2355,
+	"addresses": ["Straatnaam 1, Stad",
+		"Wegiswegweg 2, Dorp",
+		"Fijnplein 3, Gehught"
+		],
+	"metrics": ["pollen", "AQI", "O3", "NO2", "PM10", "precipitation"],
+	"paths": ["clairvoyance.pollen",
+		"clairvoyance.AQI",
+		"clairvoyance.O3",
+		"clairvoyance.NO2",
+		"clairvoyance.PM10",
+		"clairvoyance.precipitation"],
+	"interval": 60,
+	"server": "localhost",
+	"port": 2003
+}
+
