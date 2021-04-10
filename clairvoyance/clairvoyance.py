@@ -25,7 +25,13 @@ while True:
         f = urllib.parse.urlencode({"formula": str(",".join(metrics))})
         a = urllib.parse.urlencode({"address": a})
         url = "http://" + remote_server + ":" + str(remote_port) + "/forecast?" + f + "&" + a
-        j = json.loads(urllib.request.urlopen(url).read())
+        print("url: " + url)
+        try:
+            j = json.loads(urllib.request.urlopen(url).read())
+        except:
+            print('clairvoyance: could not connect to server')
+            continue
+
         #print("anser: " + str(json.dumps(j, indent=2)))
         n = 0
         timestamp = j["time"]
@@ -43,6 +49,7 @@ while True:
                         t_value = d["time"]
                         break
             except:
+                print('clairvoyance: got an error')
                 pass
 
             v = str(value)
@@ -54,13 +61,14 @@ while True:
 
     if t != '' and t != t_prev:
         try:
+            print("Sending " + str(t))
             s = socket.socket()
             s.connect((server, port))
             s.send(t.encode('ascii'))
             s.close()
             t_prev = t
         except:
-            print(time.ctime(t_start) + ' Nest: Error: Could not send message.')
+            print(time.ctime(t_start) + ' clairvoyance: Error: Could not send message.')
 
     t_now = time.time()
     if (t_now - t_start) < interval:
